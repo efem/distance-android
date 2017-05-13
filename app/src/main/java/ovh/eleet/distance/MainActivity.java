@@ -5,16 +5,11 @@ import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -22,8 +17,6 @@ import android.widget.TextView;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.content_main);
         setContentView(R.layout.activity_main);
         /*Button mButton = (Button) findViewById(R.id.button1);
         final TextView mTextView = (TextView) findViewById(R.id.tv1);
@@ -81,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 final String url = "http://www.31337.ovh:8080/distance/getAllRecords";
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                //Record record = restTemplate.getForObject(url, Record.class);
                 Record[] recList = restTemplate.getForObject(url, Record[].class);
                 RECLIST = recList;
                 return null;
@@ -101,57 +94,26 @@ public class MainActivity extends AppCompatActivity {
             TableLayout tableLayout = new TableLayout(MainActivity.this);
             TableRow tableRow;
 
-            /*
-
-            TextView tvDateHead = new TextView(MainActivity.this);
-            TextView tvDistanceHead = new TextView(MainActivity.this);
-            tvDateHead.setText("Date");
-            tvDistanceHead.setText("Distance");
-            linLayMain.addView(tvDateHead);
-            linLayMain.addView(tvDistanceHead);
-            tableRow = new TableRow(MainActivity.this);
-            tableRow.addView(tvDateHead);
-            tableRow.addView(tvDistanceHead);
-            tableLayout.addView(tableRow);*/
-
-
-
-
-
-
 
             for (Record r : RECLIST) {
                 tableRow = new TableRow(MainActivity.this);
 
                 TextView tvDate = new TextView(MainActivity.this);
                 TextView tvDistance = new TextView(MainActivity.this);
+
                 tvDistance.setText(String.valueOf(r.getDistance()) + " cm");
-               /* tvDistance.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                        ));*/
+
                 tvDate.setText(df.format(r.getDate()));
-               /* tvDate.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                ));*/
-               tvDate.setPadding(20, 20, 20, 20);
+                tvDate.setPadding(20, 20, 20, 20);
+
                 tableRow.addView(tvDate);
                 tableRow.addView(tvDistance);
-                tableLayout.addView(tableRow);
-                System.out.println("r: " + r.toString());
-                /*LinLayMain.addView(tvDate);
-                LinLayMain.addView(tvDistance);*/
-                //setContentView(tableLayout);
-//                tableLayout.setLayoutParams(new LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.MATCH_PARENT,
-//                        LinearLayout.LayoutParams.MATCH_PARENT
-//                ));
 
+                tableLayout.addView(tableRow);
+
+                System.out.println("r: " + r.toString());
             }
             linLayMain.addView(tableLayout);
-
-
 
         }
 
