@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="ovh.eleet.distance.MainActivity">
+    tools:context="ovh.eleet.distance.MainActivity"
+    android:id="@+id/mainCoord"
+    android:animateLayoutChanges="true">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,17 +16,75 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:backgroundTint="#ff0000"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email"
-        app:layout_behavior="ovh.eleet.distance.ScrollAwareFABBehavior"/>
+        android:src="@drawable/ic_add_white_24px"
+        app:backgroundTint="#ff0000"
+        app:layout_behavior="ovh.eleet.distance.ScrollAwareFABBehavior" />
 
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordLay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginBottom="110dp"
+
+        android:animateLayoutChanges="true"
+        >
+<!--
+        android:visibility="gone"
+-->
+
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSmall1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+            android:src="@android:drawable/ic_dialog_email"
+            app:backgroundTint="#ffff00"
+            app:fabSize="mini"
+            android:layout_gravity="bottom|right"
+            />
+       <!-- app:layout_anchor="@id/linLayTop"
+        app:layout_anchorGravity="bottom|right|end"-->
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSmall2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="60dp"
+            android:src="@android:drawable/ic_search_category_default"
+            app:backgroundTint="#bddd00"
+            app:fabSize="mini"
+            app:layout_anchor="@id/fabSmall1"
+            app:layout_anchorGravity="top|right" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            android:layout_marginRight="90dp"
+            app:layout_anchor="@id/fabSmall1"
+            app:layout_anchorGravity="left|center_vertical"
+            android:background="#80000000"
+            android:padding="4dp"/>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main" />
+
+    <!--app:layout_anchorGravity="top"
+          android:layout_margin="@dimen/fab_margin"-->
 
 </android.support.design.widget.CoordinatorLayout>

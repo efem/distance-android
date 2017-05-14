@@ -1,10 +1,12 @@
 package ovh.eleet.distance;
 
+import android.graphics.Color;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -30,16 +33,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        final CoordinatorLayout colLay = (CoordinatorLayout) findViewById(R.id.coordLay);
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fabSmall1 = (FloatingActionButton) findViewById(R.id.fabSmall1);
+        final CoordinatorLayout mainCoord = (CoordinatorLayout) findViewById(R.id.mainCoord);
         ScrollView sv = (ScrollView) findViewById(R.id.sViewMain);
         sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > 0 ||scrollY <0 && fab.isShown())
+                if (scrollY > 0 ||scrollY <0 && fab.isShown()) {
                     fab.hide();
+                    colLay.setVisibility(View.GONE);
+                }
                 else
                     fab.show();
+            }
+
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),
+                        "Button is clicked", Toast.LENGTH_LONG).show();
+                /*if(fabSmall1.getVisibility()==View.INVISIBLE)
+                    fabSmall1.setVisibility(View.VISIBLE);
+                else if(fabSmall1.getVisibility()==View.VISIBLE)
+                    fabSmall1.setVisibility(View.INVISIBLE);*/
+                mainCoord.setBackgroundColor(Color.parseColor("#AAB6C7"));
+                if(colLay.getVisibility()==View.GONE)
+                    colLay.setVisibility(View.VISIBLE);
+                else if(colLay.getVisibility()==View.VISIBLE)
+                    colLay.setVisibility(View.GONE);
+                fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_clear_white_24px));
+                mainCoord.getBackground().setAlpha(50);
             }
 
         });
