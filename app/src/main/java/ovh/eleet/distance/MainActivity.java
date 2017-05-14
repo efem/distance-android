@@ -5,12 +5,15 @@ import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,18 +29,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.content_main);
         setContentView(R.layout.activity_main);
-        /*Button mButton = (Button) findViewById(R.id.button1);
-        final TextView mTextView = (TextView) findViewById(R.id.tv1);
-        mButton.setOnClickListener(new View.OnClickListener() {
+
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        ScrollView sv = (ScrollView) findViewById(R.id.sViewMain);
+        sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
-            public void onClick(View v) {
-                mTextView.setText("Some Text");
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > 0 ||scrollY <0 && fab.isShown())
+                    fab.hide();
+                else
+                    fab.show();
             }
-        });*/
 
-
+        });
     }
 
     @Override

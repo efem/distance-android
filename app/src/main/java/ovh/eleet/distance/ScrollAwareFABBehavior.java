@@ -5,6 +5,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -20,6 +21,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout,
                                        FloatingActionButton child, View directTargetChild, View target, int nestedScrollAxes) {
+        Log.d("DXXX", "onStartNestedScroll");
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
                 super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target,
                         nestedScrollAxes);
@@ -28,6 +30,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child,
                                View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+        Log.d("DXXX", "onNestedScroll");
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
                 dyUnconsumed);
 
