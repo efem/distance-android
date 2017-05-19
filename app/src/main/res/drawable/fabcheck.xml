@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- When selected, use grey -->
+    <item android:src="@drawable/ic_clear_white_24px"
+        android:state_checked="true" />
+    <!-- When not selected, use white-->
+    <item android:src="@drawable/ic_add_white_24px"
+        android:state_checked="false"/>
+
+</selector>

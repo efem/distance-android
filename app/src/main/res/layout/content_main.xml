@@ -27,12 +27,15 @@
                 android:id="@+id/tvDateHead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/trDateHeadString" />
+                android:text="@string/trDateHeadString"
+                android:textColor="@color/fontColorMain"
+                android:width="180dp"/>
             <TextView
                 android:id="@+id/tvDistanceHeadHead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/trDistanceHeadString" />
+                android:text="@string/trDistanceHeadString"
+                android:textColor="@color/fontColorMain"/>
         </TableRow>
     </TableLayout>
 
@@ -41,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/topTableLay"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:textColor="@color/fontColorMain">
 
 
         <LinearLayout

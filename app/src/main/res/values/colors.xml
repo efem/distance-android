@@ -6,4 +6,17 @@
     <color name="floating_action_button_color">#FF4081</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
+
+
+    <color name="backgroundMain">#FFFFFF</color>
+    <color name="backgroundSmallFab">#6DBCDB</color>
+    <color name="backgroundMainFab">#FC4349</color>
+    <color name="backgroundDarker">#D7DADB</color>
+    <color name="floatingLabel">#000000</color>
+
+
+
+    <color name="fontColorMain">#2C3E50</color>
+    <color name="fontColorHeader">#FC4349</color>
+
 </resources>

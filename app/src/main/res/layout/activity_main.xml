@@ -7,7 +7,8 @@
     android:fitsSystemWindows="true"
     tools:context="ovh.eleet.distance.MainActivity"
     android:id="@+id/mainCoord"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    android:background="@color/backgroundMain">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,8 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+
         android:src="@drawable/ic_add_white_24px"
-        app:backgroundTint="#ff0000"
+        app:backgroundTint="@color/backgroundMainFab"
         app:layout_behavior="ovh.eleet.distance.ScrollAwareFABBehavior" />
 
 
@@ -31,53 +33,89 @@
         android:id="@+id/coordLay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="80dp"
 
         android:animateLayoutChanges="true"
-        >
-<!--
+        android:visibility="invisible">
+        <!--
         android:visibility="gone"
 -->
 
 
-
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabSmall1"
+            android:id="@+id/fabSmallRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="24dp"
-            android:src="@android:drawable/ic_dialog_email"
-            app:backgroundTint="#ffff00"
-            app:fabSize="mini"
             android:layout_gravity="bottom|right"
-            />
-       <!-- app:layout_anchor="@id/linLayTop"
-        app:layout_anchorGravity="bottom|right|end"-->
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="24dp"
+            android:src="@drawable/ic_compare_arrows_white_24px"
+            app:backgroundTint="@color/backgroundSmallFab"
+            app:fabSize="mini" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabSmall2"
+        <TextView
+            android:id="@+id/tvfabSmallRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="90dp"
+            android:background="@color/floatingLabel"
+            android:padding="4dp"
+            android:text="@string/tvDistanceRange"
+            android:textColor="#FFFFFF"
+            app:layout_anchor="@id/fabSmallRange"
+            app:layout_anchorGravity="left|center_vertical" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSmallDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
             android:layout_marginRight="24dp"
-            android:layout_marginBottom="60dp"
-            android:src="@android:drawable/ic_search_category_default"
-            app:backgroundTint="#bddd00"
+            android:src="@drawable/ic_date_range_white_24px"
+            app:backgroundTint="@color/backgroundSmallFab"
             app:fabSize="mini"
-            app:layout_anchor="@id/fabSmall1"
+            app:layout_anchor="@id/fabSmallRange"
             app:layout_anchorGravity="top|right" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvfabSmallDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="#FFFFFF"
             android:layout_marginRight="90dp"
-            app:layout_anchor="@id/fabSmall1"
-            app:layout_anchorGravity="left|center_vertical"
-            android:background="#80000000"
-            android:padding="4dp"/>
+            android:background="@color/floatingLabel"
+            android:padding="4dp"
+            android:text="@string/tvDateRange"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="20dp"
+            app:layout_anchor="@id/fabSmallDate"
+            app:layout_anchorGravity="left|center_vertical" />
+
+        <!--android:background="#80000000"-->
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSmallSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="130dp"
+            android:layout_marginRight="24dp"
+            android:src="@drawable/ic_settings_white_24px"
+            app:backgroundTint="@color/backgroundSmallFab"
+            app:fabSize="mini"
+            app:layout_anchor="@id/fabSmallDate"
+            app:layout_anchorGravity="top|right" />
+
+        <TextView
+            android:id="@+id/tvfabSmallSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="90dp"
+            android:background="@color/floatingLabel"
+            android:padding="4dp"
+            android:text="@string/tvSettings"
+            android:textColor="#FFFFFF"
+            app:layout_anchor="@id/fabSmallSettings"
+            app:layout_anchorGravity="left|center_vertical" />
+
     </android.support.design.widget.CoordinatorLayout>
 
     <include
