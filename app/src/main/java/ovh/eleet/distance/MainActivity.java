@@ -1,5 +1,6 @@
 package ovh.eleet.distance;
 
+import android.app.FragmentManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.icu.text.DateFormat;
@@ -29,9 +30,6 @@ import android.widget.Toast;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import jp.wasabeef.blurry.Blurry;
-
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,16 +37,48 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout linLayMain;
     static boolean fabClicked = false;
 
+    static CoordinatorLayout colLay = null;
+    static FloatingActionButton fab = null;
+    static FloatingActionButton fabSmall1 = null;
+    static CoordinatorLayout mainCoord = null;
+    static ScrollView sv = (ScrollView) null;
+    static RelativeLayout mainRelLay = null;
+    static FloatingActionButton fabSmallRange = null;
+
+    protected void fabActionStateNormal(boolean fabStateNormal, boolean bgStateNormal) {
+        if (fabStateNormal) {
+            fab.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_add_white_24px));
+        } else {
+            fab.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_clear_white_24px));
+            colLay.bringToFront();
+        }
+        if (bgStateNormal){
+            mainCoord.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.backgroundMain));
+            colLay.bringToFront();
+            mainCoord.getBackground().setAlpha(100);
+        } else {
+            mainCoord.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.backgroundDarker));
+            //mainCoord.getBackground().setAlpha(50);
+        }
+    }
+    public void showConfirmationDialog(View v) {
+
+        FragmentManager manager = getFragmentManager();
+        DistanceDialog dialog = new DistanceDialog();
+        dialog.show(manager, "Confirm");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final CoordinatorLayout colLay = (CoordinatorLayout) findViewById(R.id.coordLay);
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        final FloatingActionButton fabSmall1 = (FloatingActionButton) findViewById(R.id.fabSmallRange);
-        final CoordinatorLayout mainCoord = (CoordinatorLayout) findViewById(R.id.mainCoord);
-        final ScrollView sv = (ScrollView) findViewById(R.id.sViewMain);
-        final RelativeLayout mainRelLay = (RelativeLayout) findViewById(R.id.include);
+
+        colLay = (CoordinatorLayout) findViewById(R.id.coordLay);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fabSmall1 = (FloatingActionButton) findViewById(R.id.fabSmallRange);
+        mainCoord = (CoordinatorLayout) findViewById(R.id.mainCoord);
+        sv = (ScrollView) findViewById(R.id.sViewMain);
+        mainRelLay = (RelativeLayout) findViewById(R.id.include);
+        fabSmallRange = (FloatingActionButton) findViewById(R.id.fabSmallRange);
 
 
         sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -56,14 +86,23 @@ public class MainActivity extends AppCompatActivity {
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY > 0 ||scrollY <0 && fab.isShown()) {
                     fab.hide();
+                    fabActionStateNormal(true, true);
                     colLay.setVisibility(View.INVISIBLE);
 
-                }
-                else
-
+                } else {
+                    fabActionStateNormal(true, true);
                     fab.show();
+                }
             }
 
+        });
+
+        fabSmallRange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showConfirmationDialog(v);
+                Toast.makeText(getApplicationContext(), "Aaa", Toast.LENGTH_SHORT);
+            }
         });
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,21 +118,12 @@ public class MainActivity extends AppCompatActivity {
                     fabClicked = false;
                 }
                 if (fabClicked) {
-                    fab.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_clear_white_24px));
-                    mainCoord.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.backgroundDarker));
-                    colLay.bringToFront();
+                    fabActionStateNormal(false, false);
+                } else {
+                    fabActionStateNormal(true, true);
                 }
-                else{
-                    fab.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_add_white_24px));
-                    mainCoord.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.backgroundMain));
-                }
-                //mainCoord.getBackground().setAlpha(50);
-
             }
-
         });
-
-
     }
 
     @Override
@@ -163,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
                 tvDate.setTextColor(getColor(R.color.fontColorMain));
                 tvDate.setText(df.format(r.getDate()));
-                tvDate.setPadding(20, 20, 20, 20);
+                tvDate.setPadding(0, 20, 20, 20);
                 tvDate.setWidth((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, resource.getDisplayMetrics()));
 
 
