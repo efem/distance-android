@@ -8,4 +8,8 @@
     <string name="action_refresh">Refresh</string>
     <string name="etDistanceFrom">FROM</string>
     <string name="etDistanceTo">TO</string>
+    <string name="etDateFrom">DATE FROM</string>
+    <string name="etTimeFrom">TIME FROM</string>
+    <string name="etDateTo">DATE TO</string>
+    <string name="etTimeTo">TIME TO</string>
 </resources>

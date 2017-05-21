@@ -22,11 +22,11 @@ public class DistanceDialog extends DialogFragment {
     private EditText etDistanceTo;
 
     public interface DistanceDialogListener {
-        void onDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance);
-        void onDialogNegativeClick(DialogFragment dialog);
+        void onDistanceDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance);
+        void onDistanceDialogNegativeClick(DialogFragment dialog);
     }
 
-    DistanceDialogListener mListener;
+    DistanceDialogListener distanceListener;
 
     @Override
     public void onAttach(Context context) {
@@ -34,7 +34,7 @@ public class DistanceDialog extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener = (DistanceDialogListener) context;
+            distanceListener = (DistanceDialogListener) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(context.toString()
@@ -58,12 +58,12 @@ public class DistanceDialog extends DialogFragment {
         builder.setMessage("Enter distance range")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onDialogPositiveClick(DistanceDialog.this, etDistanceFrom.getText().toString(), etDistanceTo.getText().toString());
+                        distanceListener.onDistanceDialogPositiveClick(DistanceDialog.this, etDistanceFrom.getText().toString(), etDistanceTo.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onDialogNegativeClick(DistanceDialog.this);
+                        distanceListener.onDistanceDialogNegativeClick(DistanceDialog.this);
                     }
                 });
         return builder.create();

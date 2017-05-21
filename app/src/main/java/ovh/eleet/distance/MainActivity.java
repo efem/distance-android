@@ -28,22 +28,27 @@ import android.widget.Toast;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import ovh.eleet.distance.dialog.DateDialog;
 import ovh.eleet.distance.dialog.DistanceDialog;
+import ovh.eleet.distance.dialog.DistanceDialog.DistanceDialogListener;
 import ovh.eleet.distance.helper.PrepareStatement;
 
+import static ovh.eleet.distance.dialog.DateDialog.*;
 
-public class MainActivity extends AppCompatActivity implements DistanceDialog.DistanceDialogListener {
+
+public class MainActivity extends AppCompatActivity implements DistanceDialogListener, DateDialogListener {
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance) {
+    public void onDistanceDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance) {
         //Toast.makeText(getApplicationContext(), foo, Toast.LENGTH_SHORT).show();
-        Log.i("DISTANCE", "From: " + fromDistance + " TO: " + toDistance);
+        Log.i("DISTANCE", "From: " + fromDistance + " To: " + toDistance);
         try {
             double fromDistanceDouble = Double.parseDouble(fromDistance);
             double toDistanceDouble = Double.parseDouble(toDistance);
             if (fromDistanceDouble >= toDistanceDouble) {
                 Toast.makeText(getApplicationContext(), "Values are incorrect: FROM is greater or equal to TO", Toast.LENGTH_SHORT).show();
+            } else {
+                new HttpRequestTask(PrepareStatement.prepareRangeStatement(fromDistance, toDistance)).execute();
             }
-            new HttpRequestTask(PrepareStatement.prepareRangeStatement(fromDistance, toDistance)).execute();
 
         } catch (NumberFormatException nfe) {
             Toast.makeText(getApplicationContext(), "Values cannot be empty", Toast.LENGTH_SHORT).show();
@@ -52,9 +57,24 @@ public class MainActivity extends AppCompatActivity implements DistanceDialog.Di
     }
 
     @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
+    public void onDistanceDialogNegativeClick(DialogFragment dialog) {
 
     }
+
+    @Override
+    public void onDateDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance) {
+        //Toast.makeText(getApplicationContext(), foo, Toast.LENGTH_SHORT).show();
+        Log.i("DATE", "From: " + fromDistance + " To: " + toDistance);
+
+
+    }
+
+    @Override
+    public void onDateDialogNegativeClick(DialogFragment dialog) {
+
+    }
+
+
 
     LinearLayout linLayMain;
     static boolean fabClicked = false;
@@ -66,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements DistanceDialog.Di
     static ScrollView sv = (ScrollView) null;
     static RelativeLayout mainRelLay = null;
     static FloatingActionButton fabSmallRange = null;
+    static FloatingActionButton fabSmallDate = null;
 
     protected void fabActionStateNormal(boolean fabStateNormal, boolean bgStateNormal) {
         if (fabStateNormal) {
@@ -83,8 +104,13 @@ public class MainActivity extends AppCompatActivity implements DistanceDialog.Di
             //mainCoord.getBackground().setAlpha(50);
         }
     }
-    public void showConfirmationDialog() {
+    public void showDistanceDialog() {
         DialogFragment dialog = new DistanceDialog();
+        dialog.show(getFragmentManager(), "Gugu");
+    }
+
+    public void showDateDialog() {
+        DialogFragment dialog = new DateDialog();
         dialog.show(getFragmentManager(), "Gugu");
     }
 
@@ -95,11 +121,11 @@ public class MainActivity extends AppCompatActivity implements DistanceDialog.Di
 
         colLay = (CoordinatorLayout) findViewById(R.id.coordLay);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fabSmall1 = (FloatingActionButton) findViewById(R.id.fabSmallRange);
         mainCoord = (CoordinatorLayout) findViewById(R.id.mainCoord);
         sv = (ScrollView) findViewById(R.id.sViewMain);
         mainRelLay = (RelativeLayout) findViewById(R.id.include);
         fabSmallRange = (FloatingActionButton) findViewById(R.id.fabSmallRange);
+        fabSmallDate = (FloatingActionButton) findViewById(R.id.fabSmallDate);
 
 
         sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -123,8 +149,18 @@ public class MainActivity extends AppCompatActivity implements DistanceDialog.Di
             public void onClick(View v) {
                 colLay.setVisibility(View.INVISIBLE);
                 fabActionStateNormal(true, true);
-                showConfirmationDialog();
-                Toast.makeText(getApplicationContext(), "Aaa", Toast.LENGTH_SHORT);
+                showDistanceDialog();
+                Toast.makeText(getApplicationContext(), "Distance dialog shown", Toast.LENGTH_SHORT);
+            }
+        });
+
+        fabSmallDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colLay.setVisibility(View.INVISIBLE);
+                fabActionStateNormal(true, true);
+                showDateDialog();
+                Toast.makeText(getApplicationContext(), "Date dialog shown", Toast.LENGTH_SHORT);
             }
         });
 
