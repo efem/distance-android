@@ -1,8 +1,7 @@
 package ovh.eleet.distance;
 
-import android.app.FragmentManager;
+import android.app.DialogFragment;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
@@ -18,7 +17,6 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -30,9 +28,33 @@ import android.widget.Toast;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import ovh.eleet.distance.dialog.DistanceDialog;
+import ovh.eleet.distance.helper.PrepareStatement;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity implements DistanceDialog.DistanceDialogListener {
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance) {
+        //Toast.makeText(getApplicationContext(), foo, Toast.LENGTH_SHORT).show();
+        Log.i("DISTANCE", "From: " + fromDistance + " TO: " + toDistance);
+        try {
+            double fromDistanceDouble = Double.parseDouble(fromDistance);
+            double toDistanceDouble = Double.parseDouble(toDistance);
+            if (fromDistanceDouble >= toDistanceDouble) {
+                Toast.makeText(getApplicationContext(), "Values are incorrect: FROM is greater or equal to TO", Toast.LENGTH_SHORT).show();
+            }
+            new HttpRequestTask(PrepareStatement.prepareRangeStatement(fromDistance, toDistance)).execute();
+
+        } catch (NumberFormatException nfe) {
+            Toast.makeText(getApplicationContext(), "Values cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
 
     LinearLayout linLayMain;
     static boolean fabClicked = false;
@@ -61,12 +83,11 @@ public class MainActivity extends AppCompatActivity {
             //mainCoord.getBackground().setAlpha(50);
         }
     }
-    public void showConfirmationDialog(View v) {
-
-        FragmentManager manager = getFragmentManager();
-        DistanceDialog dialog = new DistanceDialog();
-        dialog.show(manager, "Confirm");
+    public void showConfirmationDialog() {
+        DialogFragment dialog = new DistanceDialog();
+        dialog.show(getFragmentManager(), "Gugu");
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
         fabSmallRange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showConfirmationDialog(v);
+                colLay.setVisibility(View.INVISIBLE);
+                fabActionStateNormal(true, true);
+                showConfirmationDialog();
                 Toast.makeText(getApplicationContext(), "Aaa", Toast.LENGTH_SHORT);
             }
         });
@@ -155,10 +178,20 @@ public class MainActivity extends AppCompatActivity {
 
     public static Record[] RECLIST;
     private class HttpRequestTask extends AsyncTask<Void, Void, Record> {
+
+        String url = "";
+        public HttpRequestTask() {
+            url = "http://www.31337.ovh:8080/distance/getAllRecords";
+        }
+        public HttpRequestTask(String url) {
+            this.url = url;
+        }
+
+
         @Override
         protected Record doInBackground(Void... params) {
             try {
-                final String url = "http://www.31337.ovh:8080/distance/getAllRecords";
+
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Record[] recList = restTemplate.getForObject(url, Record[].class);

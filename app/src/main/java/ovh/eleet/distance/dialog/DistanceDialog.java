@@ -1,6 +1,5 @@
-package ovh.eleet.distance;
+package ovh.eleet.distance.dialog;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -11,16 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import ovh.eleet.distance.R;
+
 /**
  * Created by Marek on 20.05.2017.
  */
 
 public class DistanceDialog extends DialogFragment {
 
-    private EditText et;
+    private EditText etDistanceFrom;
+    private EditText etDistanceTo;
 
     public interface DistanceDialogListener {
-        void onDialogPositiveClick(DialogFragment dialog);
+        void onDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance);
         void onDialogNegativeClick(DialogFragment dialog);
     }
 
@@ -50,20 +52,20 @@ public class DistanceDialog extends DialogFragment {
         View layout=inflater.inflate(R.layout.dialog_distance,null);
         builder.setView(layout);
 
-        et = (EditText) layout.findViewById(R.id.etDistanceFrom);
+        etDistanceFrom = (EditText) layout.findViewById(R.id.etDistanceFrom);
+        etDistanceTo = (EditText) layout.findViewById(R.id.etDistanceTo);
 
-        builder.setMessage("Yes")
-                .setPositiveButton("Fire", new DialogInterface.OnClickListener() {
+        builder.setMessage("Enter distance range")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
+                        mListener.onDialogPositiveClick(DistanceDialog.this, etDistanceFrom.getText().toString(), etDistanceTo.getText().toString());
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
+                        mListener.onDialogNegativeClick(DistanceDialog.this);
                     }
                 });
-        // Create the AlertDialog object and return it
         return builder.create();
 
 
