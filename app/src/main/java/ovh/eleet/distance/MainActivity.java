@@ -62,9 +62,10 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
     }
 
     @Override
-    public void onDateDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance) {
+    public void onDateDialogPositiveClick(DialogFragment dialog, String fromDate, String toDate, String fromTime, String toTime) {
         //Toast.makeText(getApplicationContext(), foo, Toast.LENGTH_SHORT).show();
-        Log.i("DATE", "From: " + fromDistance + " To: " + toDistance);
+        Log.i("DATE", "From: " + fromDate + " To: " + toDate);
+        Log.i("TIME", "From: " + fromTime + " To: " + toTime);
 
 
     }

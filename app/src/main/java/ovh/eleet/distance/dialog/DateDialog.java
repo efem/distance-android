@@ -78,7 +78,7 @@ public class DateDialog extends DialogFragment {
 
 
     public interface DateDialogListener {
-        void onDateDialogPositiveClick(DialogFragment dialog, String fromDate, String toDate);
+        void onDateDialogPositiveClick(DialogFragment dialog, String fromDate, String toDate, String fromTime, String toTime);
         void onDateDialogNegativeClick(DialogFragment dialog);
     }
 
@@ -156,7 +156,9 @@ public class DateDialog extends DialogFragment {
         builder.setMessage("Enter date range")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dateListener.onDateDialogPositiveClick(DateDialog.this, etDateFrom.getText().toString(), etDateTo.getText().toString());
+                        dateListener.onDateDialogPositiveClick(DateDialog.this,
+                                etDateFrom.getText().toString(), etDateTo.getText().toString(),
+                                etTimeFrom.getText().toString(), etTimeTo.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
