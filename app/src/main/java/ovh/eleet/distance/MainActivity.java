@@ -66,7 +66,10 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
         //Toast.makeText(getApplicationContext(), foo, Toast.LENGTH_SHORT).show();
         Log.i("DATE", "From: " + fromDate + " To: " + toDate);
         Log.i("TIME", "From: " + fromTime + " To: " + toTime);
+        String fullDateFrom = fromDate + "_" + fromTime.replace(":", "-") + "-00";
+        String fullDateTo = toDate + "_" + toTime.replace(":", "-") + "-00";
 
+        new HttpRequestTask(PrepareStatement.prepareDateStatement(fullDateFrom, fullDateTo)).execute();
 
     }
 
@@ -222,7 +225,10 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
         }
         public HttpRequestTask(String url) {
             this.url = url;
+
+            Log.i("URL", url);
         }
+
 
 
         @Override
