@@ -13,4 +13,8 @@ public class PrepareStatement {
     public static String prepareDateStatement(String fromDate, String toDate) {
         return URL + "showRecordsByDate?from=" + fromDate + "&to=" + toDate;
     }
+
+    public static String prepareBrowseAllStatement(String pageNo, String pageSize) {
+        return URL + "getRecordsByPage?pageNumber=" + pageNo + "&pageSize=" + pageSize;
+    }
 }

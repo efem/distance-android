@@ -28,6 +28,7 @@ import android.widget.Toast;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import ovh.eleet.distance.dialog.BrowseAllDialog;
 import ovh.eleet.distance.dialog.DateDialog;
 import ovh.eleet.distance.dialog.DistanceDialog;
 import ovh.eleet.distance.dialog.DistanceDialog.DistanceDialogListener;
@@ -36,7 +37,7 @@ import ovh.eleet.distance.helper.PrepareStatement;
 import static ovh.eleet.distance.dialog.DateDialog.*;
 
 
-public class MainActivity extends AppCompatActivity implements DistanceDialogListener, DateDialogListener {
+public class MainActivity extends AppCompatActivity implements DistanceDialogListener, DateDialogListener, BrowseAllDialog.BrowseAllDialogListener {
     @Override
     public void onDistanceDialogPositiveClick(DialogFragment dialog, String fromDistance, String toDistance) {
         //Toast.makeText(getApplicationContext(), foo, Toast.LENGTH_SHORT).show();
@@ -78,7 +79,19 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
 
     }
 
+    @Override
+    public void onBrowseAllDialogPositiveClick(DialogFragment dialog, String pageNo, String etPageSize) {
+        Log.i("REC_COUNT", "Record count: " + etPageSize);
+        Log.i("PAGE_NO", "Page Nu,ber: " + pageNo);
 
+        new HttpRequestTask(PrepareStatement.prepareBrowseAllStatement(pageNo, etPageSize)).execute();
+
+    }
+
+    @Override
+    public void onBrowseAllDialogNegativeClick(DialogFragment dialog) {
+
+    }
 
     LinearLayout linLayMain;
     static boolean fabClicked = false;
@@ -90,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
     static RelativeLayout mainRelLay = null;
     static FloatingActionButton fabSmallRange = null;
     static FloatingActionButton fabSmallDate = null;
+    static FloatingActionButton fabSmallRBrowseAll = null;
     static FloatingActionButton fabSmallRefresh = null;
 
     protected void fabActionStateNormal(boolean fabStateNormal, boolean bgStateNormal) {
@@ -110,12 +124,17 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
     }
     public void showDistanceDialog() {
         DialogFragment dialog = new DistanceDialog();
-        dialog.show(getFragmentManager(), "Gugu");
+        dialog.show(getFragmentManager(), "DistanceDialog");
     }
 
     public void showDateDialog() {
         DialogFragment dialog = new DateDialog();
-        dialog.show(getFragmentManager(), "Gugu");
+        dialog.show(getFragmentManager(), "DateDialog");
+    }
+
+    public void showBrowseAllDialog() {
+        DialogFragment dialog = new BrowseAllDialog();
+        dialog.show(getFragmentManager(), "BrowseAllDialog");
     }
 
     @Override
@@ -131,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
         fabSmallRange = (FloatingActionButton) findViewById(R.id.fabSmallRange);
         fabSmallDate = (FloatingActionButton) findViewById(R.id.fabSmallDate);
         fabSmallRefresh = (FloatingActionButton) findViewById(R.id.fabSmallRefresh);
-
+        fabSmallRBrowseAll = (FloatingActionButton) findViewById(R.id.fabSmallBrowseAll);
 
         sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
@@ -166,6 +185,16 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
                 fabActionStateNormal(true, true);
                 showDateDialog();
                 Toast.makeText(getApplicationContext(), "Date dialog shown", Toast.LENGTH_SHORT);
+            }
+        });
+
+        fabSmallRBrowseAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colLay.setVisibility(View.INVISIBLE);
+                fabActionStateNormal(true, true);
+                showBrowseAllDialog();
+                Toast.makeText(getApplicationContext(), "Browse all dialog shown", Toast.LENGTH_SHORT);
             }
         });
 
@@ -229,6 +258,9 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
 
     public static Record[] RECLIST;
     public static String URL = "";
+
+
+
     private class HttpRequestTask extends AsyncTask<Void, Void, Record> {
 
         public HttpRequestTask() {

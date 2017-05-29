@@ -92,7 +92,7 @@
         <!--android:background="#80000000"-->
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabSmallSettings"
+            android:id="@+id/fabSmallBrowseAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="130dp"
@@ -110,9 +110,9 @@
             android:layout_marginRight="90dp"
             android:background="@color/floatingLabel"
             android:padding="4dp"
-            android:text="@string/tvSettings"
+            android:text="@string/tvBrowseAll"
             android:textColor="#FFFFFF"
-            app:layout_anchor="@id/fabSmallSettings"
+            app:layout_anchor="@id/fabSmallBrowseAll"
             app:layout_anchorGravity="left|center_vertical" />
 
         <android.support.design.widget.FloatingActionButton

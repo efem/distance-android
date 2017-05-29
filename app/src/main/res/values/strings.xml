@@ -4,7 +4,7 @@
     <string name="trDistanceHeadString">DISTANCE</string>
     <string name="tvDistanceRange">Select distance range</string>
     <string name="tvDateRange">Select date and time</string>
-    <string name="tvSettings">Settings</string>
+    <string name="tvBrowseAll">Browse all...</string>
     <string name="tvActionRefresh">Refresh</string>
     <string name="etDistanceFrom">FROM</string>
     <string name="etDistanceTo">TO</string>
@@ -12,4 +12,6 @@
     <string name="etTimeFrom">TIME FROM</string>
     <string name="etDateTo">DATE TO</string>
     <string name="etTimeTo">TIME TO</string>
+    <string name="etPageNo">PAGE NO.</string>
+    <string name="etRecordsPerPage">PER PAGE</string>
 </resources>
