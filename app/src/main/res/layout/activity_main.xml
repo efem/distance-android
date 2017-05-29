@@ -115,6 +115,30 @@
             app:layout_anchor="@id/fabSmallSettings"
             app:layout_anchorGravity="left|center_vertical" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSmallRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="190dp"
+            android:layout_marginRight="24dp"
+            android:src="@drawable/ic_refresh_white_24px"
+            app:backgroundTint="@color/backgroundSmallFab"
+            app:fabSize="mini"
+            app:layout_anchor="@id/fabSmallDate"
+            app:layout_anchorGravity="top|right" />
+
+        <TextView
+            android:id="@+id/tvfabSmallRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="90dp"
+            android:background="@color/floatingLabel"
+            android:padding="4dp"
+            android:text="@string/tvActionRefresh"
+            android:textColor="#FFFFFF"
+            app:layout_anchor="@id/fabSmallRefresh"
+            app:layout_anchorGravity="left|center_vertical" />
+
     </android.support.design.widget.CoordinatorLayout>
 
     <include

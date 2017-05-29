@@ -5,7 +5,7 @@
     <string name="tvDistanceRange">Select distance range</string>
     <string name="tvDateRange">Select date and time</string>
     <string name="tvSettings">Settings</string>
-    <string name="action_refresh">Refresh</string>
+    <string name="tvActionRefresh">Refresh</string>
     <string name="etDistanceFrom">FROM</string>
     <string name="etDistanceTo">TO</string>
     <string name="etDateFrom">DATE FROM</string>

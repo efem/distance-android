@@ -85,12 +85,12 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
 
     static CoordinatorLayout colLay = null;
     static FloatingActionButton fab = null;
-    static FloatingActionButton fabSmall1 = null;
     static CoordinatorLayout mainCoord = null;
     static ScrollView sv = (ScrollView) null;
     static RelativeLayout mainRelLay = null;
     static FloatingActionButton fabSmallRange = null;
     static FloatingActionButton fabSmallDate = null;
+    static FloatingActionButton fabSmallRefresh = null;
 
     protected void fabActionStateNormal(boolean fabStateNormal, boolean bgStateNormal) {
         if (fabStateNormal) {
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
         mainRelLay = (RelativeLayout) findViewById(R.id.include);
         fabSmallRange = (FloatingActionButton) findViewById(R.id.fabSmallRange);
         fabSmallDate = (FloatingActionButton) findViewById(R.id.fabSmallDate);
+        fabSmallRefresh = (FloatingActionButton) findViewById(R.id.fabSmallRefresh);
 
 
         sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -187,6 +188,16 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
                 }
             }
         });
+
+        fabSmallRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colLay.setVisibility(View.INVISIBLE);
+                fabActionStateNormal(true, true);
+                new HttpRequestTask().execute();
+                Toast.makeText(getApplicationContext(), "Refresh OK", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override
@@ -217,15 +228,15 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
     }
 
     public static Record[] RECLIST;
+    public static String URL = "";
     private class HttpRequestTask extends AsyncTask<Void, Void, Record> {
 
-        String url = "";
         public HttpRequestTask() {
-            url = "http://www.31337.ovh:8080/distance/getAllRecords";
+            if (URL == null || URL == "")
+            URL = "http://www.31337.ovh:8080/distance/getAllRecords";
         }
         public HttpRequestTask(String url) {
-            this.url = url;
-
+            URL = url;
             Log.i("URL", url);
         }
 
@@ -237,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
 
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                Record[] recList = restTemplate.getForObject(url, Record[].class);
+                Record[] recList = restTemplate.getForObject(URL, Record[].class);
                 RECLIST = recList;
                 return null;
             } catch (Exception e) {
