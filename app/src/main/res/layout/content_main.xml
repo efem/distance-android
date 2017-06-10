@@ -15,12 +15,13 @@
 
     <TableLayout
         android:id="@+id/topTableLay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
 
         <TableRow
             android:id="@+id/trDateHead"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -28,14 +29,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/trDateHeadString"
-                android:textColor="@color/fontColorMain"
-                android:width="180dp"/>
+                android:textColor="@color/backgroundDarker"
+                android:width="180dp"
+                android:background="@color/fontColorMain"/>
             <TextView
-                android:id="@+id/tvDistanceHeadHead"
+                android:id="@+id/tvDistanceHead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/trDistanceHeadString"
-                android:textColor="@color/fontColorMain"/>
+                android:textColor="@color/backgroundDarker"
+                android:background="@color/fontColorMain"/>
         </TableRow>
     </TableLayout>
 

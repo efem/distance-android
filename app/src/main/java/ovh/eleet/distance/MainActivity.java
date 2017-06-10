@@ -2,6 +2,7 @@ package ovh.eleet.distance;
 
 import android.app.DialogFragment;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.w3c.dom.Text;
 
 import ovh.eleet.distance.dialog.BrowseAllDialog;
 import ovh.eleet.distance.dialog.DateDialog;
@@ -105,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
     static FloatingActionButton fabSmallDate = null;
     static FloatingActionButton fabSmallRBrowseAll = null;
     static FloatingActionButton fabSmallRefresh = null;
+    static TextView tvDateHead = null;
+    static TextView tvDistanceHead = null;
 
     protected void fabActionStateNormal(boolean fabStateNormal, boolean bgStateNormal) {
         if (fabStateNormal) {
@@ -142,6 +146,9 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         colLay = (CoordinatorLayout) findViewById(R.id.coordLay);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mainCoord = (CoordinatorLayout) findViewById(R.id.mainCoord);
@@ -151,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
         fabSmallDate = (FloatingActionButton) findViewById(R.id.fabSmallDate);
         fabSmallRefresh = (FloatingActionButton) findViewById(R.id.fabSmallRefresh);
         fabSmallRBrowseAll = (FloatingActionButton) findViewById(R.id.fabSmallBrowseAll);
+
 
         sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
@@ -293,23 +301,40 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         protected void onPostExecute(Record record) {
+            Typeface roboto = Typeface.createFromAsset(getApplicationContext().getAssets(),
+                    "font/RobotoCondensed-Light.ttf"); //use this.getAssets if you are calling from an Activity
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            tvDateHead = (TextView) findViewById(R.id.tvDateHead);
+            tvDistanceHead = (TextView) findViewById(R.id.tvDistanceHead);
+            tvDateHead.setTypeface(roboto);
+            tvDistanceHead.setTypeface(roboto);
+
             linLayMain = (LinearLayout) findViewById(R.id.LinLay);
             linLayMain.removeAllViews();
             TableLayout tableLayout = new TableLayout(MainActivity.this);
             TableRow tableRow;
+            TableRow tableRowLine;
+            /*TableRow tableRowLine = new TableRow(MainActivity.this);
+            tableRowLine.setBackgroundResource(R.drawable.row_border);*/
 
             Resources resource = getResources();
 
             for (Record r : RECLIST) {
                 tableRow = new TableRow(MainActivity.this);
+                tableRowLine = new TableRow(MainActivity.this);
+                tableRowLine.setBackgroundColor(getColor(R.color.fontColorMain));
+                tableRowLine.setMinimumHeight(2);
+                //tableRowLine.setBackgroundResource(R.color.backgroundDarker);
 
                 TextView tvDate = new TextView(MainActivity.this);
                 TextView tvDistance = new TextView(MainActivity.this);
 
+                tvDistance.setTypeface(roboto);
                 tvDistance.setTextColor(getColor(R.color.fontColorMain));
                 tvDistance.setText(String.valueOf(r.getDistance()) + " cm");
 
+                tvDate.setTypeface(roboto);
                 tvDate.setTextColor(getColor(R.color.fontColorMain));
                 tvDate.setText(df.format(r.getDate()));
                 tvDate.setPadding(0, 20, 20, 20);
@@ -320,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
                 tableRow.addView(tvDistance);
 
                 tableLayout.addView(tableRow);
+                tableLayout.addView(tableRowLine);
 
                 System.out.println("r: " + r.toString());
             }
