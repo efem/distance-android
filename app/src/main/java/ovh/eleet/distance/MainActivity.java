@@ -82,6 +82,16 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
     }
 
     @Override
+    public void onDateDialogLastDayClick(DialogFragment dialog) {
+        new HttpRequestTask(PrepareStatement.prepareDateStatementMinusDay(1)).execute();
+    }
+
+    @Override
+    public void onDateDialogLast3DaysClick(DialogFragment dialog) {
+        new HttpRequestTask(PrepareStatement.prepareDateStatementMinusDay(3)).execute();
+    }
+
+    @Override
     public void onBrowseAllDialogPositiveClick(DialogFragment dialog, String pageNo, String etPageSize) {
         Log.i("REC_COUNT", "Record count: " + etPageSize);
         Log.i("PAGE_NO", "Page Nu,ber: " + pageNo);
@@ -145,8 +155,6 @@ public class MainActivity extends AppCompatActivity implements DistanceDialogLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
 
         colLay = (CoordinatorLayout) findViewById(R.id.coordLay);

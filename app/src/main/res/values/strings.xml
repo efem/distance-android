@@ -6,6 +6,8 @@
     <string name="tvDateRange">Select date and time</string>
     <string name="tvBrowseAll">Browse all...</string>
     <string name="tvActionRefresh">Refresh</string>
+    <string name="tvLastDay">LAST 24 HOURS</string>
+    <string name="tvLast3Days">LAST 3 DAYS</string>
     <string name="etDistanceFrom">FROM</string>
     <string name="etDistanceTo">TO</string>
     <string name="etDateFrom">DATE FROM</string>

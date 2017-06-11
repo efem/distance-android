@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialogDateLayMain"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -20,9 +21,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
+            android:focusable="false"
             android:hint="@string/etDateFrom"
-            android:inputType="date"
-            android:focusable="false"/>
+            android:inputType="date" />
 
         <EditText
             android:id="@+id/etTimeFrom"
@@ -33,9 +34,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
+            android:focusable="false"
             android:hint="@string/etTimeFrom"
-            android:inputType="time"
-            android:focusable="false"/>
+            android:inputType="time" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -54,10 +55,10 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
+            android:focusable="false"
             android:fontFamily="sans-serif"
             android:hint="@string/etDateTo"
-            android:inputType="date"
-            android:focusable="false"/>
+            android:inputType="date" />
 
         <EditText
             android:id="@+id/etTimeTo"
@@ -68,20 +69,49 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
+            android:focusable="false"
             android:hint="@string/etTimeTo"
-            android:inputType="time"
-            android:focusable="false"/>
+            android:inputType="time" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvShowLastDay"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/dialogDateLayQuickPick"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:clickable="true"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:textColor="@color/fontColorMain"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvShowLast3Days"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="0dp"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/frame_border"
+            android:clickable="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/tvLast3Days"
+            android:textColor="@color/fontColorMain"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvShowLastDay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/frame_border"
+            android:clickable="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/tvLastDay"
+            android:textColor="@color/fontColorMain"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 
 </LinearLayout>

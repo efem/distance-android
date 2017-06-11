@@ -13,7 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -80,6 +84,8 @@ public class DateDialog extends DialogFragment {
     public interface DateDialogListener {
         void onDateDialogPositiveClick(DialogFragment dialog, String fromDate, String toDate, String fromTime, String toTime);
         void onDateDialogNegativeClick(DialogFragment dialog);
+        void onDateDialogLast3DaysClick(DialogFragment dialog);
+        void onDateDialogLastDayClick(DialogFragment dialog);
     }
 
     DateDialog.DateDialogListener dateListener;
@@ -105,7 +111,7 @@ public class DateDialog extends DialogFragment {
         LayoutInflater inflater= getActivity().getLayoutInflater();
 
 
-        View layout=inflater.inflate(R.layout.dialog_date,null);
+        View layout = inflater.inflate(R.layout.dialog_date,null);
         builder.setView(layout);
 
         etDateFrom = (EditText) layout.findViewById(R.id.etDateFrom);
@@ -166,6 +172,23 @@ public class DateDialog extends DialogFragment {
                         dateListener.onDateDialogNegativeClick(DateDialog.this);
                     }
                 });
+        TextView tvLastDay = (TextView) layout.findViewById(R.id.tvShowLastDay);
+        tvLastDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateListener.onDateDialogLastDayClick(DateDialog.this);
+                getDialog().dismiss();
+            }
+        });
+
+        TextView tvLast3Days = (TextView) layout.findViewById(R.id.tvShowLast3Days);
+        tvLast3Days.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateListener.onDateDialogLast3DaysClick(DateDialog.this);
+                getDialog().dismiss();
+            }
+        });
         return builder.create();
 
 
